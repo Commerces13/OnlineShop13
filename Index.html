@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brochettes Street Shop</title>
+
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #6200ea;
+        padding: 20px;
+        text-align: center;
+        color: white;
+    }
+
+    h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5em;
+        margin: 0;
+    }
+
+    h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    p, button, select, input {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1em;
+    }
+
+    .products {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 20px;
+        gap: 20px; /* Espacement entre les produits */
+    }
+
+    .product {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 280px;
+        text-align: left;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        transition: transform 0.3s;
+    }
+
+    .product:hover {
+        transform: translateY(-5px);
+    }
+
+    .product img {
+        max-width: 100%;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* Description du produit */
+    .product p {
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #555;
+    }
+
+    /* Sélecteurs d'options */
+    .product label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .product select, .product input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+    }
+
+    /* Boutons */
+    button {
+        background-color: #6200ea;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+        width: 100%; /* Prend toute la largeur */
+        font-size: 1.1em;
+    }
+
+    button:hover {
+        background-color: #3700b3;
+    }
+
+    /* Panier */
+    .cart {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        position: fixed;
+        right: 20px;
+        top: 100px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: none; /* Cacher le panier par défaut */
+        z-index: 1000;
+    }
+
+    .cart h2 {
+        margin: 0 0 10px;
+    }
+
+    .cart-items {
+        max-height: 200px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+
+    .total {
+        font-weight: bold;
+    }
+
+    .cart-toggle {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background-color: #6200ea;
+        color: white;
+        border-radius: 50%;
+        padding: 15px;
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    /* Responsivité */
+    @media (max-width: 600px) {
+        .products {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product {
+            width: 90%;
+        }
+    }
+
+    /* Formulaire de livraison */
+    .delivery-form {
+        display: none;
+        margin-top: 15px;
+    }
+
+    .delivery-form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Brochettes Street Shop 🍢</h1>
+        <p>Commandez vos brochettes et boissons fraîches!</p>
+    </header>
+    
+    <main>
+        <section class="products">
+            <!-- Samoussa -->
+            <div class="product">
+                <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/886124cc-a97b-7067-e285-0b32d38b320b.jpeg" alt="Samoussa" />
+                <h2>Samoussa 🥟</h2>
+                <p>5,50 € les 6 pièces</p>
+                <label for="samoussa-option">Choisissez un supplément :</label>
+                <select id="samoussa-option">
+                    <option value="0">Aucun</option>
+                    <option value="2">Supplément Manioc 🍠 (+2 €)</option>
+                    <option value="2">Supplément Banane 🍌 (+2 €)</option>
+                    <option value="2">Salade Papaye 🥗 (+2 €)</option>
+                    <option value="2">Salade Mangue 🥭 (+2 €)</option>
+                </select>
+                <button class="add-to-cart" data-product="Samoussa" data-price="5.50" data-quantity="1">Ajouter au Panier</button>
+            </div>
+
+            <!-- Brochette -->
+            <div class="product">
+                <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/b4a00c7f-0423-80b4-0fe0-ebaab753db74.jpeg" alt="Brochette de Poulet" />
+                <h2>Brochette 🍢</h2>
+                <p>Menu à 6,50 €</p>
+                <label for="brochette-type">Type de brochette :</label>
+                <select id="brochette-type">
+                    <option value="">Choisissez...</option>
+                    <option value="Poulet">Brochette de Poulet 🍗</option>
+                    <option value="Viande">Brochette de Viande Halal 🥩</option>
+                    <option value="Crevettes">Brochette de Crevettes 🦐</option>
+                </select>
+                <label for="brochette-option">Choisissez un supplément :</label>
+                <select id="brochette-option">
+                    <option value="0">Aucun</option>
+                    <option value="2.50">Riz 🍚 (+2,50 €)</option>
+                </select>
+
+                <label for="brochette-canette">Ajoutez une boisson pour 1 € :</label>
+                <select id="brochette-canette">
+                    <option value="0">Aucune</option>
+                    <option value="1">Coca 🥤 (+1 €)</option>
+                    <option value="1">Sprite 🥤 (+1 €)</option>
+                    <option value="1">Fanta 🥤 (+1 €)</option>
+                </select>
+
+                <button class="add-to-cart" data-product="Brochette" data-price="6.50" data-quantity="1" id="add-brochette">Ajouter au Panier</button>
+            </div>
+
+            <!-- Boissons -->
+            <div class="product">
+                <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/d9e3f57b-2ad5-6a1a-df84-57c2d2e0a45d.jpeg" alt="Boissons Canette" />
+                <h2>Boissons Canette 🥤</h2>
+                <p>Choisissez parmi notre sélection de boissons à 2 €.</p>
+                <label for="drink-select">Choisissez une boisson :</label>
+                <select id="drink-select">
+                    <option value="">-- Sélectionner --</option>
+                    <option value="2">Coca 🥤</option>
+                    <option value="2">Sprite 🥤</option>
+                    <option value="2">Fanta 🥤</option>
+                </select>
+                <button class="add-to-cart" data-product="Boisson" data-price="2" data-quantity="1" id="add-drink">Ajouter au Panier</button>
+            </div>
+        </section>
+        
+        <aside class="cart" id="cart">
+            <h2>Panier 🛒</h2>
+            <div class="cart-items" id="cart-items"></div>
+            <div class="total" id="total-price">Total: 0 €</div>
+            <button id="finalize-order">Finaliser la commande</button>
+
+            <!-- Formulaire de livraison -->
+            <form class="delivery-form" id="delivery-form">
+                <input type="text" id="name" placeholder="Votre nom" required>
+                <input type="text" id="phone" placeholder="Votre numéro de téléphone" required>
+                <input type="text" id="address" placeholder="Votre adresse" required>
+                <button type="submit" id="confirm-order">Confirmer la commande</button>
+            </form>
+        </aside>
+
+        <!-- Bouton flottant pour le panier -->
+        <div class="cart-toggle" id="cart-toggle">🛒</div>
+    </main>
+
+    <script>
+        const cartItems = document.getElementById('cart-items');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const cart = document.getElementById('cart');
+        const totalPriceElement = document.getElementById('total-price');
+        const finalizeOrderButton = document.getElementById('finalize-order');
+        const deliveryForm = document.getElementById('delivery-form');
+        const cartToggleButton = document.getElementById('cart-toggle');
+        let totalPrice = 0;
+
+        // Ajout des articles au panier
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const productName = button.getAttribute('data-product');
+                let productPrice = parseFloat(button.getAttribute('data-price'));
+                const productQuantity = parseInt(button.getAttribute('data-quantity'));
+
+                // Suppléments pour Samoussa
+                const samoussaOption = document.getElementById('samoussa-option').value;
+                if (productName === "Samoussa" && samoussaOption != "0") {
+                    productPrice += 2; // Ajout du supplément
+                }
+
+                // Suppléments pour Brochette
+                const brochetteType = document.getElementById('brochette-type').value;
+                const brochetteOption = document.getElementById('brochette-option').value;
+                const brochetteCanette = document.getElementById('brochette-canette').value;
+                if (productName === "Brochette") {
+                    if (brochetteType === "") {
+                        alert("Veuillez choisir un type de brochette !");
+                        return; // Ne pas ajouter si aucun type n'est sélectionné
+                    }
+                    productPrice += parseFloat(brochetteOption); // Ajout du supplément pour la brochette
+
+                    // Ajouter la canette à 1 € si sélectionnée
+                    if (brochetteCanette != "0") {
+                        productPrice += parseFloat(brochetteCanette);
+                    }
+                }
+
+                // Créer un nouvel élément dans le panier
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                    <span>${productQuantity}x ${productName} - ${productPrice.toFixed(2)} €</span>
+                    <button class="remove-from-cart">❌</button>
+                `;
+                cartItems.appendChild(cartItem);
+
+                // Mettre à jour le prix total
+                totalPrice += productPrice * productQuantity;
+                totalPriceElement.textContent = `Total: ${totalPrice.toFixed(2)} €`;
+
+                // Afficher le panier
+                cart.style.display = 'block';
+            });
+        });
+
+        // Gestion de la suppression d'un article du panier
+        cartItems.addEventListener('click', (event) => {
+            if (event.target.classList.contains('remove-from-cart')) {
+                const cartItem = event.target.parentElement;
+                const itemText = cartItem.querySelector('span').textContent;
+                const itemPrice = parseFloat(itemText.split('- ')[1].replace(' €', ''));
+
+                // Mettre à jour le prix total
+                totalPrice -= itemPrice;
+                totalPriceElement.textContent = `Total: ${totalPrice.toFixed(2)} €`;
+
+                // Supprimer l'élément du panier
+                cartItems.removeChild(cartItem);
+                
+           // Cacher le panier si vide
+                if (cartItems.children.length === 0) {
+                    cart.style.display = 'none';
+                }
+            }
+        });
+
+        // Affichage/masquage du panier
+        cartToggleButton.addEventListener('click', () => {
+            cart.style.display = cart.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Finalisation de la commande
+        finalizeOrderButton.addEventListener('click', () => {
+            deliveryForm.style.display = deliveryForm.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Gestion de la soumission du formulaire de livraison
+        deliveryForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Empêcher le rechargement de la page
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            alert(`Commande confirmée!\nNom: ${name}\nTéléphone: ${phone}\nAdresse: ${address}\nTotal: ${totalPrice.toFixed(2)} €`);
+
+            // Réinitialisation du panier et du formulaire
+            cartItems.innerHTML = '';
+            totalPrice = 0;
+            totalPriceElement.textContent = `Total: ${totalPrice.toFixed(2)} €`;
+            deliveryForm.reset();
+            cart.style.display = 'none';
+        });
+    </script>
+</body>
+    </html>
